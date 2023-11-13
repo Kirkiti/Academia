@@ -212,12 +212,13 @@
         </div>
     </div>
 
-   <div class="container">
+
+    <div class="container">
     <div class="row">
         <div class="col-md-6">
             <h1>Our 1st video</h1>
             <div class="embed-responsive embed-responsive-16by9">
-                <video class="embed-responsive-item" controls width="450" height="300">
+                <video id="firstVideo" class="embed-responsive-item" controls width="350" height="300" autoplay muted>
                     <source src="static/MR.%20YATOR%20PRESENTS....mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -226,7 +227,7 @@
         <div class="col-md-6">
             <h1>Our 2nd video</h1>
             <div class="embed-responsive embed-responsive-16by9">
-                <video class="embed-responsive-item" controls width="450" height="300">
+                <video id="secondVideo" class="embed-responsive-item" controls width="350" height="300" muted>
                     <source src="static/academia.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -234,6 +235,15 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -619,6 +629,29 @@
 
     <!-- Javascript -->
     <script src="js/main.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var firstVideo = document.getElementById("firstVideo");
+        var secondVideo = document.getElementById("secondVideo");
+
+        firstVideo.addEventListener("ended", function() {
+            secondVideo.muted = false; // Unmute the second video
+            secondVideo.play();
+            if (document.pictureInPictureEnabled && secondVideo.requestPictureInPicture) {
+                secondVideo.requestPictureInPicture();
+            }
+        });
+
+        // Start playing the first video
+        firstVideo.play().then(function() {
+            // Autoplay successful
+        }).catch(function(error) {
+            // Autoplay failed, handle error
+            console.error("Autoplay failed: ", error);
+        });
+    });
+</script>
 
 
 </body>
